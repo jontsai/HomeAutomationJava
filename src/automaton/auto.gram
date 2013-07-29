@@ -1,0 +1,24 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for Automaton
+ */
+
+grammar auto;
+
+public <greet> = (GOOD (MORNING | EVENING | AFTERNOON) | HELLO | HI) ADAM;
+public <farewell> = (BYE | GOODBYE) ADAM;
+
+public <querytime> = WHAT TIME IS IT;
+
+public <queryweather> = WEATHER;
+
+public <stop> = STOP;
+
+public <wake> = ADAM WAKE UP;
+public <sleep> = GO TO SLEEP;
+public <shutdown> = INITIATE SHUTDOWN;
+
+/*
+public <invoke> = Cerebro;
+*/

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ********************************************************** -->
+<!-- *                                                        * -->
+<!-- * Apache Ant build file used to build the Sphinx-4 apps. * -->
+<!-- * To build the demos, just type the following:           * -->
+<!-- *                                                        * -->
+<!-- *     ant -buildfile build.xml                           * -->
+<!-- *                                                        * -->
+<!-- * For more information:  http://ant.apache.org/          * -->
+<!-- *                                                        * -->
+<!-- ********************************************************** -->
+
+<project basedir="." default="all" name="HomeAutomation">
+
+	<!-- ********************************************************** -->
+	<!-- *                                                        * -->
+	<!-- * Where to find things...                                * -->
+	<!-- *                                                        * -->
+	<!-- ********************************************************** -->
+
+    <property name="version" value="0_1"/>
+    <property name="app_src_dir" value="src"/>
+    <property name="build_dir" value="bld"/>
+    <property name="app_classes_dir" value="${build_dir}"/>
+    <property name="lib_dir" value="lib"/>
+    <property name="bin_dir" value="bin"/>
+    <property name="deploy_dir" value="deploy"/>
+	<path id="libs">
+		<pathelement path="${app_classes_dir}"/>
+		<pathelement location="${lib_dir}/sphinx4.jar"/>
+		<pathelement location="${lib_dir}/jsapi.jar"/>
+		<pathelement location="${lib_dir}/tags.jar"/>
+		<pathelement location="${lib_dir}/js.jar"/>
+		<pathelement location="${lib_dir}/junit-4.8.1.jar"/>
+	</path>
+	<target name="all"
+            depends="home_automation"
+            description="Compiles and jars the app"/>
+
+    <target name="home_automation">
+        <mkdir dir="${app_classes_dir}/automaton"/>
+        <javac debug="true"
+               listfiles="true"
+               deprecation="true"
+               includeAntRuntime="false"
+               srcdir="${app_src_dir}"
+               destdir="${app_classes_dir}"
+               includes="automaton/**">
+            <classpath refid="libs"/>
+        </javac>
+        <copy file="${app_src_dir}/automaton/auto.gram"
+              todir="${app_classes_dir}/automaton"/>
+        <copy file="${app_src_dir}/automaton/automaton.config.xml"
+              todir="${app_classes_dir}/automaton"/>
+        <mkdir dir="${bin_dir}"/>
+        <jar destfile="${bin_dir}/Automaton.jar"
+             manifest="${app_src_dir}/automaton/automaton.Manifest"
+             basedir="${app_classes_dir}"
+             includes="automaton/**"
+             compress="true"/>
+    </target>
+</project>
